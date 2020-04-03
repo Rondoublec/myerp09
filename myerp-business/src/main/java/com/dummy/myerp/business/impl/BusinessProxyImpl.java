@@ -11,6 +11,11 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
  */
 public class BusinessProxyImpl implements BusinessProxy {
 
+    // ==================== Constructeurs ====================
+    /** Instance unique de la classe (design pattern Singleton) */
+    private static final BusinessProxyImpl INSTANCE = new BusinessProxyImpl();
+
+
     // ==================== Attributs Static ====================
     /** Le Proxy d'accès à la couche Consumer-DAO */
     private static DaoProxy daoProxy;
@@ -21,9 +26,13 @@ public class BusinessProxyImpl implements BusinessProxy {
     private ComptabiliteManager comptabiliteManager = new ComptabiliteManagerImpl();
 
 
-    // ==================== Constructeurs ====================
-    /** Instance unique de la classe (design pattern Singleton) */
-    private static final BusinessProxyImpl INSTANCE = new BusinessProxyImpl();
+    /**
+     * Constructeur.
+     */
+    protected BusinessProxyImpl() {
+        super();
+    }
+
 
     /**
      * Renvoie l'instance unique de la classe (design pattern Singleton).
@@ -51,13 +60,9 @@ public class BusinessProxyImpl implements BusinessProxy {
         return BusinessProxyImpl.INSTANCE;
     }
 
-    /**
-     * Constructeur.
-     */
-    protected BusinessProxyImpl() {
-        super();
+    public static BusinessProxyImpl getInstance(String s, TransactionManager transactionManager) {
+        return null;
     }
-
 
     // ==================== Getters/Setters ====================
     @Override

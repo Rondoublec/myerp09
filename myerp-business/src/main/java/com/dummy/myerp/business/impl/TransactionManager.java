@@ -10,14 +10,18 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  */
 public class TransactionManager {
 
-    // ==================== Attributs Static ====================
-    /** PlatformTransactionManager pour le DataSource MyERP */
-    private static PlatformTransactionManager ptmMyERP;
-
-
     // ==================== Constructeurs ====================
     /** Instance unique de la classe (design pattern Singleton) */
     private static final TransactionManager INSTANCE = new TransactionManager();
+    // ==================== Attributs Static ====================
+    /** PlatformTransactionManager pour le DataSource MyERP */
+    private static PlatformTransactionManager platformTransactionManager;
+    /**
+     * Constructeur.
+     */
+    protected TransactionManager() {
+        super();
+    }
     /**
      * Renvoie l'instance unique de la classe (design pattern Singleton).
      *
@@ -29,18 +33,12 @@ public class TransactionManager {
     /**
      * Renvoie l'instance unique de la classe (design pattern Singleton).
      *
-     * @param pPtmMyERP -
+     * @param transactionManager -
      * @return {@link TransactionManager}
      */
-    public static TransactionManager getInstance(PlatformTransactionManager pPtmMyERP) {
-        ptmMyERP = pPtmMyERP;
+    public static TransactionManager getInstance(PlatformTransactionManager transactionManager) {
+        TransactionManager.platformTransactionManager = transactionManager;
         return TransactionManager.INSTANCE;
-    }
-    /**
-     * Constructeur.
-     */
-    protected TransactionManager() {
-        super();
     }
 
 
@@ -55,32 +53,32 @@ public class TransactionManager {
      *      </ul>
      */
     public TransactionStatus beginTransactionMyERP() {
-        DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
-        vTDef.setName("Transaction_txManagerMyERP");
-        vTDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition.setName("Transaction_txManagerMyERP");
+        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
-        return ptmMyERP.getTransaction(vTDef);
+        return platformTransactionManager.getTransaction(defaultTransactionDefinition);
     }
 
     /**
      * Commit la transaction sur le DataSource MyERP
      *
-     * @param pTStatus retrouné par la méthode {@link #beginTransactionMyERP()}
+     * @param transactionStatus retrouné par la méthode {@link #beginTransactionMyERP()}
      */
-    public void commitMyERP(TransactionStatus pTStatus) {
-        if (pTStatus != null) {
-            ptmMyERP.commit(pTStatus);
+    public void commitMyERP(TransactionStatus transactionStatus) {
+        if (transactionStatus != null) {
+            platformTransactionManager.commit(transactionStatus);
         }
     }
 
     /**
      * Rollback la transaction sur le DataSource MyERP
      *
-     * @param pTStatus retrouné par la méthode {@link #beginTransactionMyERP()}
+     * @param transactionStatus retrouné par la méthode {@link #beginTransactionMyERP()}
      */
-    public void rollbackMyERP(TransactionStatus pTStatus) {
-        if (pTStatus != null) {
-            ptmMyERP.rollback(pTStatus);
+    public void rollbackMyERP(TransactionStatus transactionStatus) {
+        if (transactionStatus != null) {
+            platformTransactionManager.rollback(transactionStatus);
         }
     }
 }
