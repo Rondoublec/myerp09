@@ -1,3 +1,6 @@
+jdk:
+  - openjdk8
+
 addons:
   sonarcloud:
     organization: "rondoublec"
