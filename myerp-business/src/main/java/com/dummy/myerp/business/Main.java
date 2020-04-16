@@ -33,7 +33,7 @@ public class Main {
 //		}
 
 		List<EcritureComptable> ecritureComptableList = businessProxy.getComptabiliteManager().getListEcritureComptable();
-		System.out.println("Ecritures comptables: ");
+		System.out.println("Ecritures comptables 36 : ");
 		for (EcritureComptable ecritureComptable : ecritureComptableList) {
 			System.out.println(ecritureComptable);
 		}
@@ -41,7 +41,7 @@ public class Main {
 		JournalComptable journalComptable = journalComptableList.get(0);
 		EcritureComptable ecritureComptable = new EcritureComptable();
 		ecritureComptable.setDate(new Date());
-		ecritureComptable.setLibelle("coucou!!");
+		ecritureComptable.setLibelle("LibelléDeTest!!");
 		ecritureComptable.setJournal(journalComptable);
 		LigneEcritureComptable l1 = new LigneEcritureComptable();
 		l1.setDebit(BigDecimal.valueOf(100));
@@ -58,7 +58,7 @@ public class Main {
 		businessProxy.getComptabiliteManager().addReference(ecritureComptable);
 
 		ecritureComptableList = businessProxy.getComptabiliteManager().getListEcritureComptable();
-		System.out.println("Ecritures comptables: ");
+		System.out.println("Ecritures comptables 61 : ");
 		for (EcritureComptable e : ecritureComptableList) {
 			System.out.println(e);
 		}
