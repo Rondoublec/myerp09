@@ -90,21 +90,21 @@
             </value>
         </property>
 
-        <property name="SQLselectSequenceEcritureComptable">
+        <property name="sqlSelectSequenceEcritureComptable">
             <value>
                 SELECT journal_code, annee, derniere_valeur
                 FROM myerp.sequence_ecriture_comptable
                 WHERE journal_code = :journal_code AND annee=:annee
             </value>
         </property>
-        <property name="SQLupdateSequenceEcritureComptable">
+        <property name="sqlUpdateSequenceEcritureComptable">
             <value>
                 UPDATE myerp.sequence_ecriture_comptable
                 SET derniere_valeur=:derniere_valeur
                 WHERE journal_code = :journal_code AND annee=:annee
             </value>
         </property>
-        <property name="SQLinsertSequenceEcritureComptable">
+        <property name="sqlInsertSequenceEcritureComptable">
             <value>
                 INSERT INTO myerp.sequence_ecriture_comptable
                 (journal_code, annee, derniere_valeur)
