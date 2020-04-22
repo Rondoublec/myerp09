@@ -1,11 +1,14 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
@@ -56,6 +59,17 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     }
 
     /**
+     *  1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
+     *      (table sequence_ecriture_comptable)
+     *  2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+     *          1. Utiliser le numéro 1.
+     *      * Sinon :
+     *          1. Utiliser la dernière valeur + 1
+     *  3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
+     *  4.  Enregistrer (insert/update) la valeur de la séquence en persitance
+     *      (table sequence_ecriture_comptable)
+     *
+     * @param pEcritureComptable L'écriture comptable concernée
      * {@inheritDoc}
      */
     // TODO à tester
@@ -63,17 +77,31 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
-        /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                    (table sequence_ecriture_comptable)
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        1. Utiliser le numéro 1.
-                    * Sinon :
-                        1. Utiliser la dernière valeur + 1
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
-         */
+        TransactionStatus transactionStatus = null;
+        transactionStatus = getTransactionManager().beginTransactionMyERP();
+
+        Calendar calendrier = GregorianCalendar.getInstance();
+        calendrier.setTime(pEcritureComptable.getDate());
+        int anneeEcriture = calendrier.get(Calendar.YEAR);
+
+        String journalCode = pEcritureComptable.getJournal().getCode();
+        Integer derniereValeur = getDaoProxy().getComptabiliteDao().getDerniereValeurSequenceEcriture(journalCode, anneeEcriture);
+        Integer nouvelleValeur;
+
+        if (derniereValeur == null) {
+            nouvelleValeur = 1;
+            pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
+            SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable(journalCode, anneeEcriture, nouvelleValeur);
+            getDaoProxy().getComptabiliteDao().insertSequenceEcriture(sequenceEcritureComptable);
+        } else {
+            nouvelleValeur = ++derniereValeur;
+            pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
+            SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable(journalCode, anneeEcriture, nouvelleValeur);
+            getDaoProxy().getComptabiliteDao().updateSequenceEcriture(sequenceEcritureComptable);
+        }
+        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
+        getTransactionManager().commitMyERP(transactionStatus);
+
     }
 
     /**

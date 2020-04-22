@@ -1,10 +1,10 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 
 public class EcritureComptableTest {
@@ -21,23 +21,27 @@ public class EcritureComptableTest {
     }
 
     @Test
-    public void isEquilibree() {
+    public void testWhenIsEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
-
         vEcriture.setLibelle("Equilibrée");
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33.00"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301.00"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40.00", "7.00"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
         Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
+    }
 
+    @Test
+    public void testWhenIsNotEquilibree() {
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
         vEcriture.getListLigneEcriture().clear();
         vEcriture.setLibelle("Non équilibrée");
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "10", null));
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "20", "1"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "2"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "1"));
         Assert.assertFalse(vEcriture.toString(), vEcriture.isEquilibree());
     }
 
