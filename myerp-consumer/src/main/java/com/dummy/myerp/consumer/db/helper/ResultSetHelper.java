@@ -36,7 +36,7 @@ public abstract class ResultSetHelper {
         Integer vRetour = null;
         int vInt = pRS.getInt(pColName);
         if (!pRS.wasNull()) {
-            vRetour = new Integer(vInt);
+            vRetour = vInt;
         }
         return vRetour;
     }
