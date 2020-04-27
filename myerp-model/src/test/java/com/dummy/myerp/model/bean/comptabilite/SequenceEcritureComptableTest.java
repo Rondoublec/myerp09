@@ -11,35 +11,35 @@ public class SequenceEcritureComptableTest {
 		// Act
 		SequenceEcritureComptable sequence = new SequenceEcritureComptable();
 		sequence.setAnnee(2020);
-		sequence.setDerniereValeur(10000);
+		sequence.setDerniereValeur(10001);
 
 		// Assert
 		assertEquals("Test of 'annee' setter and getter", Integer.valueOf(2020), sequence.getAnnee());
-		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(10000), sequence.getDerniereValeur());
-		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=null, annee=2020, derniereValeur=10000}", sequence.toString());
+		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(10001), sequence.getDerniereValeur());
+		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=null, annee=2020, derniereValeur=10001}", sequence.toString());
 	}
 
 	@Test
 	public void testConstructeurAvec2parametres() {
 		// Act
-		SequenceEcritureComptable sequence = new SequenceEcritureComptable(2030, 5000);
+		SequenceEcritureComptable sequence = new SequenceEcritureComptable(2022, 20002);
 
 		// Assert
-		assertEquals("Test of 'annee' setter and getter", Integer.valueOf(2030), sequence.getAnnee());
-		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(5000), sequence.getDerniereValeur());
-		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=null, annee=2030, derniereValeur=5000}", sequence.toString());
+		assertEquals("Test of 'annee' setter and getter", Integer.valueOf(2022), sequence.getAnnee());
+		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(20002), sequence.getDerniereValeur());
+		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=null, annee=2022, derniereValeur=20002}", sequence.toString());
 	}
 
 	@Test
 	public void testConstructeurAvec3parametres() {
 		// Act
-		SequenceEcritureComptable sequence = new SequenceEcritureComptable("CD", 2030, 5000 );
+		SequenceEcritureComptable sequence = new SequenceEcritureComptable("AC", 2023, 30003 );
 
 		// Assert
-		assertEquals("Test of 'annee' setter and getter", Integer.valueOf(2030), sequence.getAnnee());
-		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(5000), sequence.getDerniereValeur());
-		assertEquals("Test of 'journalCode' setter and getter", "CD", sequence.getJournalCode());
-		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=CD, annee=2030, derniereValeur=5000}", sequence.toString());
+		assertEquals("Test of 'annee' setter and getter", Integer.valueOf(2023), sequence.getAnnee());
+		assertEquals("Test of 'derniereValeur' setter and getter", Integer.valueOf(30003), sequence.getDerniereValeur());
+		assertEquals("Test of 'journalCode' setter and getter", "AC", sequence.getJournalCode());
+		assertEquals("Test of empty constructor", "SequenceEcritureComptable{journalCode=AC, annee=2023, derniereValeur=30003}", sequence.toString());
 	}
 
 }

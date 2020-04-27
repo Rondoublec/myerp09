@@ -1,6 +1,9 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -127,7 +130,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
-            throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
+            throw new FunctionalException("RG_Compta_1_01 : L'écriture comptable ne respecte pas les règles de gestion.",
                                           new ConstraintViolationException(
                                               "L'écriture comptable ne respecte pas les contraintes de validation",
                                               vViolations));
@@ -135,10 +138,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // ===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
         if (!pEcritureComptable.isEquilibree()) {
-            throw new FunctionalException("L'écriture comptable n'est pas équilibrée.");
+            throw new FunctionalException("RG_Compta_2_01 : L'écriture comptable n'est pas équilibrée.");
         }
 
         // ===== RG_Compta_3 : une écriture comptable doit avoir au moins 2 lignes d'écriture (1 au débit, 1 au crédit)
+        // le minimum de 2 lignes est déja testé par ailleurs par "getConstraintValidator"
         int vNbrCredit = 0;
         int vNbrDebit = 0;
         for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
@@ -157,11 +161,25 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             || vNbrCredit < 1
             || vNbrDebit < 1) {
             throw new FunctionalException(
-                "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
+                "RG_Compta_3_01 : L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        Instant ecritureComptableInstant = Instant.ofEpochMilli(pEcritureComptable.getDate().getTime());
+        Integer ecritureComptableYear = LocalDateTime.ofInstant(ecritureComptableInstant, ZoneId.of("UTC+1")).toLocalDate().getYear();;
+        int positionAnnee = pEcritureComptable.getReference().indexOf("-");
+        if (!ecritureComptableYear.equals(
+                Integer.valueOf(pEcritureComptable.getReference().substring(++positionAnnee, positionAnnee+4)))){
+            throw new FunctionalException("RG_Compta_5_01 : La date de l'écriture comptable n'est pas cohérente avec celle de sa référence.");
+        }
+        String ecritureComptableJournalCode = pEcritureComptable.getJournal().getCode();
+        int positionJournalCode = pEcritureComptable.getReference().indexOf("-");
+        if (!ecritureComptableJournalCode.equals(
+                pEcritureComptable.getReference().substring(0, positionJournalCode))){
+            throw new FunctionalException("RG_Compta_5_02 : Le code du journal de l'écriture comptable n'est pas cohérent avec celui de sa référence.");
+        }
+
     }
 
 
