@@ -1,5 +1,20 @@
 package com.dummy.myerp.business.impl.manager;
 
+import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
+import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
+import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.TransactionStatus;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,21 +23,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.transaction.TransactionStatus;
-import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
-import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
-import com.dummy.myerp.technical.exception.FunctionalException;
-import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 /**
@@ -80,8 +80,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
-        TransactionStatus transactionStatus = null;
-        transactionStatus = getTransactionManager().beginTransactionMyERP();
+//TODO à verifier        TransactionStatus transactionStatus = null;
+//TODO à verifier        transactionStatus = getTransactionManager().beginTransactionMyERP();
 
         Calendar calendrier = GregorianCalendar.getInstance();
         calendrier.setTime(pEcritureComptable.getDate());
@@ -93,17 +93,17 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         if (derniereValeur == null) {
             nouvelleValeur = 1;
-            pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
             SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable(journalCode, anneeEcriture, nouvelleValeur);
             getDaoProxy().getComptabiliteDao().insertSequenceEcriture(sequenceEcritureComptable);
         } else {
             nouvelleValeur = ++derniereValeur;
-            pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
             SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable(journalCode, anneeEcriture, nouvelleValeur);
             getDaoProxy().getComptabiliteDao().updateSequenceEcriture(sequenceEcritureComptable);
         }
-        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
-        getTransactionManager().commitMyERP(transactionStatus);
+        pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
+
+//TODO à verifier        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
+//TODO à verifier        getTransactionManager().commitMyERP(transactionStatus);
 
     }
 
@@ -195,15 +195,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
                 // Recherche d'une écriture ayant la même référence
-                EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
-                    pEcritureComptable.getReference());
-
+                EcritureComptable vECRef =
+                        getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(pEcritureComptable.getReference());
                 // Si l'écriture à vérifier est une nouvelle écriture (id == null),
                 // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
                 // c'est qu'il y a déjà une autre écriture avec la même référence
-                if (pEcritureComptable.getId() == null
-                    || !pEcritureComptable.getId().equals(vECRef.getId())) {
-                    throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
+                if (pEcritureComptable.getId() == null || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                    throw new FunctionalException("RG_Compta_6_01 : Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {
                 // Dans ce cas, c'est bon, ça veut dire qu'on n'a aucune autre écriture avec la même référence.

@@ -28,7 +28,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptableUnit() throws Exception {
+    public void checkEcritureComptableUnit_EcritureValide() throws Exception {
         // Arrange
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
@@ -53,7 +53,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptableUnitRG2() throws Exception {
+    public void checkEcritureComptableUnitRG2_EcritureNonEquilibre() throws Exception {
         // Arrange
         raisedException.expect(FunctionalException.class);
         raisedException.expectMessage("RG_Compta_2_01 : L'écriture comptable n'est pas équilibrée.");
@@ -71,7 +71,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptableUnitRG3() throws Exception {
+    public void checkEcritureComptableUnitRG3_DebitSeulement() throws Exception {
         // Arrange
         raisedException.expect(FunctionalException.class);
         raisedException.expectMessage("RG_Compta_3_01 : L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
