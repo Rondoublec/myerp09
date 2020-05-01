@@ -12,11 +12,12 @@ addons:
 #      secure: "1ad579afa992a0a2494f932549fb215381922f6c"
 
 before_script:
-  - psql -c 'create database db_myerp;' -U postgres
-  - psql -c "create user usr_myerp with password 'myerp';" -U postgres
-  - psql -c 'grant all privileges on database db_myerp to usr_myerp;' -U postgres
+  - psql -c 'CREATE DATABASE db_myerp;' -U postgres
+  - psql -c "CREATE USER usr_myerp WITH PASSWORD 'myerp';" -U postgres
+  - psql -c 'GRANT ALL PRIVILEGES ON DATABASE db_myerp to usr_myerp;' -U postgres
   - psql -U postgres -d db_myerp -a -f init_db_myerp_test.sql
-#  - psql -c 'select * from myerp.journal_comptable' -U postgres
+  - psql -c 'select * from myerp.journal_comptable' -U postgres
+  - psql -c 'select * from myerp.journal_comptable' -U usr_myerp -P myerp
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
