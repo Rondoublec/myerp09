@@ -16,6 +16,7 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) throws FunctionalException {
+/*
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("com/dummy/myerp/business/applicationContext.xml");
 
 		BusinessProxy businessProxy = (BusinessProxy) context.getBean("BusinessProxy");
@@ -69,5 +70,6 @@ public class Main {
 		// Termine le contexte Spring
 		context.close();
 
+*/
 	}
 }

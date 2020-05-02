@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.dummy.myerp</groupId>
         <artifactId>myerp</artifactId>
-        <version>1.x.x-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -87,6 +87,10 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dummy.myerp</groupId>
+            <artifactId>myerp-technical</artifactId>
         </dependency>
     </dependencies>
 
