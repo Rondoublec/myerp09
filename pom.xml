@@ -93,6 +93,12 @@
         <profile>
             <id>test-consumer</id>
         </profile>
+
+        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
+        <profile>
+            <id>test-integration</id>
+        </profile>
+
     </profiles>
 
 

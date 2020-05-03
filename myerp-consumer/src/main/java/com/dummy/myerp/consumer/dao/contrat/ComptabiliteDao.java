@@ -34,6 +34,11 @@ public interface ComptabiliteDao {
      */
     public void updateSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable);
 
+    /**
+     * Supprime la sequence de reférencement d'ecritures comptables
+     * @param sequenceEcritureComptable
+     */
+    public void deleteSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable);
 
     /**
      * Renvoie la liste des Comptes Comptables

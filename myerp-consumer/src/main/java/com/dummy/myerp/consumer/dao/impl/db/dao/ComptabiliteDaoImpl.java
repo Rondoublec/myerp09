@@ -37,6 +37,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     private String sqlSelectSequenceEcritureComptable;
     private String sqlInsertSequenceEcritureComptable;
     private String sqlUpdateSequenceEcritureComptable;
+    private String sqlDeleteSequenceEcritureComptable;
     private String sqlGetListJournalComptable;
     private String sqlGetListEcritureComptable;
     private String sqlGetEcritureComptable;
@@ -79,6 +80,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public void setSqlSelectSequenceEcritureComptable(String pSqlSelectSequenceEcritureComptable) {
         sqlSelectSequenceEcritureComptable = pSqlSelectSequenceEcritureComptable;
     }
+    public void setSqlDeleteSequenceEcritureComptable(String pSqlDeleteSequenceEcritureComptable) {
+        sqlDeleteSequenceEcritureComptable = pSqlDeleteSequenceEcritureComptable;
+    }
 
     @Override
     public Integer getDerniereValeurSequenceEcriture(String journalCode, Integer annee) {
@@ -114,6 +118,17 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue(ANNEE, sequenceEcritureComptable.getAnnee());
         vSqlParams.addValue(DERNIERE_VALEUR, sequenceEcritureComptable.getDerniereValeur());
         vJdbcTemplate.update(sqlUpdateSequenceEcritureComptable, vSqlParams);
+
+    }
+
+    @Override
+    public void deleteSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue(JOURNAL_CODE, sequenceEcritureComptable.getJournalCode());
+        vSqlParams.addValue(ANNEE, sequenceEcritureComptable.getAnnee());
+        vSqlParams.addValue(DERNIERE_VALEUR, sequenceEcritureComptable.getDerniereValeur());
+        vJdbcTemplate.update(sqlDeleteSequenceEcritureComptable, vSqlParams);
 
     }
 
