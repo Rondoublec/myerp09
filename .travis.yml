@@ -13,8 +13,8 @@ addons:
 
 before_script:
   - psql -c "CREATE USER usr_myerp WITH PASSWORD 'myerp';" -U postgres
-  - psql -c 'CREATE DATABASE db_myerp;' -U postgres
-  - psql -c 'GRANT ALL PRIVILEGES ON DATABASE db_myerp to usr_myerp;' -U postgres
+  - psql -c "CREATE DATABASE db_myerp;" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE db_myerp to usr_myerp;" -U postgres
   - psql -U usr_myerp -d db_myerp -a -f init_db_myerp_test.sql
 
 script:

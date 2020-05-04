@@ -35,32 +35,15 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         super();
     }
 
-    /** RG6 : La référence d'une écriture comptable doit être unique, il n'est pas possible de créer plusieurs écritures ayant la même référence. */
-    @Test
-    public void checkRefUniqueEcritureReferenceRG6_GenerationReference() {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, new BigDecimal(123),
-                null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
-                null, null,
-                new BigDecimal(123)));
-        SpringRegistry.getBusinessProxy().getComptabiliteManager().addReference(vEcritureComptable);
-        String ref1 = vEcritureComptable.getReference();
-        SpringRegistry.getBusinessProxy().getComptabiliteManager().addReference(vEcritureComptable);
-        String ref2 = vEcritureComptable.getReference();
-        Assert.assertNotEquals(ref1, ref2);
-    }
 
     @Test
     public void checkgetListEcritureComptable() throws FunctionalException {
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
     }
 
+    /** RG6 : La référence d'une écriture comptable doit être unique,
+     *  il n'est pas possible de créer plusieurs écritures ayant la même référence.
+     *  */
     @Test
     public void checkRefUniqueEcritureReferenceRG6_ReferenceDoubleAvecIdNull() throws FunctionalException {
         // Arrange
