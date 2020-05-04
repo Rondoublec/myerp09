@@ -45,4 +45,17 @@ public class EcritureComptableTest {
         Assert.assertFalse(vEcriture.toString(), vEcriture.isEquilibree());
     }
 
+    @Test
+    public void testWhenIsEquilibreeWithNegativeValue() {
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+        vEcriture.setLibelle("Equilibrée");
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "261"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "-40", "7"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(3, null, "-30"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(3, "10", null));
+        Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
+    }
 }
