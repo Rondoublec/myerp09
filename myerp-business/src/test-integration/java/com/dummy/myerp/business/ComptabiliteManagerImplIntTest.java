@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Classe de test de l'initialisation du contexte Spring
  */
-public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
+public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
 
     @Rule
     public ExpectedException raisedException = ExpectedException.none();
@@ -31,7 +31,7 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
     /**
      * Constructeur.
      */
-    public ComptabiliteManagerImplIntegrationTest() {
+    public ComptabiliteManagerImplIntTest() {
         super();
     }
 
@@ -74,6 +74,7 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         ecritureComptable.setId(null);
         SpringRegistry.getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         // Assert : Si "FunctionalException RG_Compta_6_01"
+
     }
 
     @Test
@@ -105,10 +106,11 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         ecritureComptable.setId(ecritureComptable.getId()+1);
         SpringRegistry.getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         // Assert : Si "FunctionalException RG_Compta_6_01"
+
     }
 
     @Test
-    public void checkUpdateEcritureComptable() throws FunctionalException {
+    public void checkUpdateEcritureComptableAndDelete() throws FunctionalException {
         // Arrange
         List<CompteComptable> compteComptables = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListCompteComptable();
         List<JournalComptable> journalComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListJournalComptable();
@@ -134,35 +136,10 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         SpringRegistry.getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
         ecritureComptable.setLibelle("Libellé : " + ecritureComptable.getReference() + "mise à jour");
         SpringRegistry.getBusinessProxy().getComptabiliteManager().updateEcritureComptable(ecritureComptable);
-    }
 
-    @Test
-    public void checkDeleteEcritureComptable() throws FunctionalException {
-        // Arrange
-        List<CompteComptable> compteComptables = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListCompteComptable();
-        List<JournalComptable> journalComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListJournalComptable();
-        JournalComptable journalComptable = journalComptableList.get(0);
-        EcritureComptable ecritureComptable = new EcritureComptable();
-        LigneEcritureComptable l1 = new LigneEcritureComptable();
-        LigneEcritureComptable l2 = new LigneEcritureComptable();
-
-        ecritureComptable.setDate(new Date());
-        ecritureComptable.setLibelle("Libellé test integ");
-        ecritureComptable.setJournal(journalComptable);
-        l1.setDebit(BigDecimal.valueOf(100));
-        l1.setCompteComptable(compteComptables.get(0));
-        l1.setLibelle("Facture Fournisseur Test integ");
-        l2.setCredit(BigDecimal.valueOf(100));
-        l2.setCompteComptable(compteComptables.get(4));
-        l2.setLibelle("Paiement Banque Test integ");
-        ecritureComptable.getListLigneEcriture().add(l1);
-        ecritureComptable.getListLigneEcriture().add(l2);
-        // Act
-        SpringRegistry.getBusinessProxy().getComptabiliteManager().addReference(ecritureComptable);
-        ecritureComptable.setLibelle("Libellé : " + ecritureComptable.getReference());
-        SpringRegistry.getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
-
+        // Nettoyage
         SpringRegistry.getBusinessProxy().getComptabiliteManager().deleteEcritureComptable(ecritureComptable.getId());
+
     }
 
 }
