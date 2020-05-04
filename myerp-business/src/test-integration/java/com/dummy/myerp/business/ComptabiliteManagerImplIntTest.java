@@ -37,8 +37,13 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
 
 
     @Test
-    public void checkgetListEcritureComptable() throws FunctionalException {
+    public void checkGetListEcritureComptable() throws FunctionalException {
+        // Arrange
+        // Act
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
+        // assert
+        Assert.assertTrue(ecritureComptableList.size() > 0);
+
     }
 
     /** RG6 : La référence d'une écriture comptable doit être unique,
@@ -112,6 +117,8 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     @Test
     public void checkUpdateEcritureComptableAndDelete() throws FunctionalException {
         // Arrange
+        final String LIBELLE = "Libellé ";
+        final String MODIF = "mis à jour";
         List<CompteComptable> compteComptables = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListCompteComptable();
         List<JournalComptable> journalComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListJournalComptable();
         JournalComptable journalComptable = journalComptableList.get(0);
@@ -132,9 +139,9 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
         ecritureComptable.getListLigneEcriture().add(l2);
         // Act
         SpringRegistry.getBusinessProxy().getComptabiliteManager().addReference(ecritureComptable);
-        ecritureComptable.setLibelle("Libellé : " + ecritureComptable.getReference());
+        ecritureComptable.setLibelle(LIBELLE + ecritureComptable.getReference());
         SpringRegistry.getBusinessProxy().getComptabiliteManager().insertEcritureComptable(ecritureComptable);
-        ecritureComptable.setLibelle("Libellé : " + ecritureComptable.getReference() + "mise à jour");
+        ecritureComptable.setLibelle(LIBELLE + ecritureComptable.getReference() + MODIF);
         SpringRegistry.getBusinessProxy().getComptabiliteManager().updateEcritureComptable(ecritureComptable);
 
         // Nettoyage

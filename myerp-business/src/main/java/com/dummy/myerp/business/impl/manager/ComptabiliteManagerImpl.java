@@ -80,8 +80,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
-//TODO à verifier        TransactionStatus transactionStatus = null;
-//TODO à verifier        transactionStatus = getTransactionManager().beginTransactionMyERP();
 
         Calendar calendrier = GregorianCalendar.getInstance();
         calendrier.setTime(pEcritureComptable.getDate());
@@ -101,9 +99,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             getDaoProxy().getComptabiliteDao().updateSequenceEcriture(sequenceEcritureComptable);
         }
         pEcritureComptable.setReference(journalCode + "-" + anneeEcriture + "/" + String.format("%05d", nouvelleValeur));
-
-//TODO à verifier        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
-//TODO à verifier        getTransactionManager().commitMyERP(transactionStatus);
 
     }
 
@@ -167,14 +162,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         Instant ecritureComptableInstant = Instant.ofEpochMilli(pEcritureComptable.getDate().getTime());
-        Integer ecritureComptableYear = LocalDateTime.ofInstant(ecritureComptableInstant, ZoneId.of("UTC+1")).toLocalDate().getYear();;
-        int positionAnnee = pEcritureComptable.getReference().indexOf("-");
+        Integer ecritureComptableYear = LocalDateTime.ofInstant(ecritureComptableInstant, ZoneId.of("UTC+1")).toLocalDate().getYear();
+        int positionAnnee = pEcritureComptable.getReference().indexOf('-');
         if (!ecritureComptableYear.equals(
                 Integer.valueOf(pEcritureComptable.getReference().substring(++positionAnnee, positionAnnee+4)))){
             throw new FunctionalException("RG_Compta_5_01 : La date de l'écriture comptable n'est pas cohérente avec celle de sa référence.");
         }
         String ecritureComptableJournalCode = pEcritureComptable.getJournal().getCode();
-        int positionJournalCode = pEcritureComptable.getReference().indexOf("-");
+        int positionJournalCode = pEcritureComptable.getReference().indexOf('-');
         if (!ecritureComptableJournalCode.equals(
                 pEcritureComptable.getReference().substring(0, positionJournalCode))){
             throw new FunctionalException("RG_Compta_5_02 : Le code du journal de l'écriture comptable n'est pas cohérent avec celui de sa référence.");
