@@ -1,10 +1,14 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class EcritureComptableTest {
@@ -18,6 +22,44 @@ public class EcritureComptableTest {
                                                                     vLibelle,
                                                                     vDebit, vCredit);
         return vRetour;
+    }
+    @Test
+    public void test_SettersAndGetters() {
+        // Arrange
+        Integer VALEUR_ID = 1;
+        JournalComptable JOURNAL_COMPTABLE = new JournalComptable("AC", "Achat");
+        Date DATE_DU_JOUR = new Date();
+        String LIBELLE = "Libelle";
+        String REFERENCE = "AC-2020/00000";
+        BigDecimal CENT = new BigDecimal(100.00);
+        // Act
+        EcritureComptable vEcriture = new EcritureComptable();
+        vEcriture.setId(VALEUR_ID);
+        vEcriture.setJournal(JOURNAL_COMPTABLE);
+        vEcriture.setDate(DATE_DU_JOUR);
+        vEcriture.setLibelle(LIBELLE);
+        vEcriture.setReference(REFERENCE);
+
+        LigneEcritureComptable vLigneEcritureComptable = new LigneEcritureComptable();
+        CompteComptable vCompteComptable = new CompteComptable();
+        vCompteComptable.setNumero(VALEUR_ID);
+        vCompteComptable.setLibelle(LIBELLE);
+        vLigneEcritureComptable.setCompteComptable(vCompteComptable);
+        vLigneEcritureComptable.setLibelle(LIBELLE);
+        vLigneEcritureComptable.setDebit(CENT);
+        vLigneEcritureComptable.setCredit(CENT);
+
+        // Assert
+        assertEquals("Test de 'id' setter et getter", VALEUR_ID, vEcriture.getId());
+        assertEquals("Test de 'JournalComptable' setter et getter", JOURNAL_COMPTABLE, vEcriture.getJournal());
+        assertEquals("Test de 'Date' setter et getter", DATE_DU_JOUR, vEcriture.getDate());
+        assertEquals("Test de 'Libelle' setter et getter", LIBELLE, vEcriture.getLibelle());
+        assertEquals("Test de 'Reference' setter et getter", REFERENCE, vEcriture.getReference());
+
+        assertEquals("Test de 'getCompteComptable' setter et getter", VALEUR_ID, vLigneEcritureComptable.getCompteComptable().getNumero());
+        assertEquals("Test de 'getLibelle' setter et getter", LIBELLE, vLigneEcritureComptable.getLibelle());
+        assertEquals("Test de 'getDebit' setter et getter", CENT, vLigneEcritureComptable.getDebit());
+        assertEquals("Test de 'getCredit' setter et getter", CENT, vLigneEcritureComptable.getCredit());
     }
 
     @Test
