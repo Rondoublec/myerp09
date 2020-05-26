@@ -37,7 +37,7 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
 
 
     @Test
-    public void checkGetListEcritureComptable() throws FunctionalException {
+    public void test_GetListEcritureComptable() throws FunctionalException {
         // Arrange
         // Act
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getBusinessProxy().getComptabiliteManager().getListEcritureComptable();
@@ -115,7 +115,7 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     }
 
     @Test
-    public void checkUpdateEcritureComptableAndDelete() throws FunctionalException {
+    public void test_UpdateEcritureComptableAndDelete() throws FunctionalException {
         // Arrange
         final String LIBELLE = "Libellé ";
         final String MODIF = "mis à jour";

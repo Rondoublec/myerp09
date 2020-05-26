@@ -63,7 +63,7 @@ public class EcritureComptableTest {
     }
 
     @Test
-    public void testWhenIsEquilibree() {
+    public void test_WhenIsEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
         vEcriture.setLibelle("Equilibrée");
@@ -75,7 +75,7 @@ public class EcritureComptableTest {
     }
 
     @Test
-    public void testWhenIsNotEquilibree() {
+    public void test_WhenIsNotEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
         vEcriture.getListLigneEcriture().clear();
@@ -88,7 +88,7 @@ public class EcritureComptableTest {
     }
 
     @Test
-    public void testWhenIsEquilibreeWithNegativeValue() {
+    public void test_WhenIsEquilibreeWithNegativeValue() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
         vEcriture.setLibelle("Equilibrée");

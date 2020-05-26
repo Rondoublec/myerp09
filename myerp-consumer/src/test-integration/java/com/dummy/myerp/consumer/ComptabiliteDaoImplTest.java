@@ -30,7 +30,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void check_ListCompteComptable() {
+    public void test_ListCompteComptable() {
         // arrange
         // act
         List<CompteComptable> compteComptablesList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListCompteComptable();
@@ -39,7 +39,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void check_ListJournalComptableList() {
+    public void test_ListJournalComptableList() {
         // arrange
         // act
         List<JournalComptable> journalComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListJournalComptable();
@@ -47,7 +47,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         Assert.assertTrue(journalComptableList.size() > 0);
     }
     @Test
-    public void check_ListEcritureComptableList(){
+    public void test_ListEcritureComptableList(){
         // arrange
         // act
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListEcritureComptable();
@@ -55,7 +55,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         Assert.assertTrue(ecritureComptableList.size() > 0);
     }
     @Test
-    public void check_GetEcritureComptableFound() throws NotFoundException {
+    public void test_GetEcritureComptableFound() throws NotFoundException {
         // arrange
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(0);
@@ -65,7 +65,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         Assert.assertTrue(ecritureComptable.getReference().equals(rEcritureComptable.getReference()));
     }
     @Test
-    public void check_GetEcritureComptableNotFound() throws NotFoundException {
+    public void test_GetEcritureComptableNotFound() throws NotFoundException {
         // arrange
         raisedException.expect(NotFoundException .class);
         raisedException.expectMessage("EcritureComptable non trouvée : id=99999");
@@ -74,7 +74,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         // Assert : Si "EcritureComptable non trouvée : id=99999"
     }
     @Test
-    public void check_GetEcritureComptableByRefFound() throws NotFoundException {
+    public void test_GetEcritureComptableByRefFound() throws NotFoundException {
         // arrange
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListEcritureComptable();
         EcritureComptable ecritureComptable = ecritureComptableList.get(0);
@@ -84,7 +84,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         Assert.assertTrue(ecritureComptable.getId().equals(rEcritureComptable.getId()));
     }
     @Test
-    public void check_GetEcritureComptableByRefNotFound() throws NotFoundException {
+    public void test_GetEcritureComptableByRefNotFound() throws NotFoundException {
         // arrange
         raisedException.expect(NotFoundException .class);
         raisedException.expectMessage("EcritureComptable non trouvée : reference=ZZ-1234/99999");
@@ -94,7 +94,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void check_UpdateEcritureComptable() throws NotFoundException {
+    public void test_UpdateEcritureComptable() throws NotFoundException {
         // arrange
         List<EcritureComptable> ecritureComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListEcritureComptable();
         EcritureComptable oldEcritureComptable = ecritureComptableList.get(0);
@@ -108,7 +108,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void check_getDerniereValeurSequenceEcriture() {
+    public void test_getDerniereValeurSequenceEcriture() {
         // arrange
         List<JournalComptable> journalComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListJournalComptable();
         String journalCode = journalComptableList.get(1).getCode();
@@ -150,7 +150,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void check_updateSequenceEcriture() {
+    public void test_updateSequenceEcriture() {
         // arrange
         List<JournalComptable> journalComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListJournalComptable();
         String journalCode = journalComptableList.get(1).getCode();
@@ -170,7 +170,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void checkInsertEcritureComptableAndDelete() throws NotFoundException {
+    public void test_InsertEcritureComptableAndDelete() throws NotFoundException {
         // Arrange
         List<CompteComptable> compteComptables = SpringRegistry.getDaoProxy().getComptabiliteDao().getListCompteComptable();
         List<JournalComptable> journalComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListJournalComptable();

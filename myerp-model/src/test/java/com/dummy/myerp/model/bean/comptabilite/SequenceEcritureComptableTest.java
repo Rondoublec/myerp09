@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class SequenceEcritureComptableTest {
 
 	@Test
-	public void testConstructeurSansParametresAvecSetters() {
+	public void test_ConstructeurSansParametresAvecSetters() {
 		// Act
 		SequenceEcritureComptable sequence = new SequenceEcritureComptable();
 		sequence.setJournalCode("AA");
@@ -21,7 +21,7 @@ public class SequenceEcritureComptableTest {
 	}
 
 	@Test
-	public void testConstructeurAvec2parametres() {
+	public void test_ConstructeurAvec2parametres() {
 		// Act
 		SequenceEcritureComptable sequence = new SequenceEcritureComptable(2022, 20002);
 
@@ -32,7 +32,7 @@ public class SequenceEcritureComptableTest {
 	}
 
 	@Test
-	public void testConstructeurAvec3parametres() {
+	public void test_ConstructeurAvec3parametres() {
 		// Act
 		SequenceEcritureComptable sequence = new SequenceEcritureComptable("AC", 2023, 30003 );
 
