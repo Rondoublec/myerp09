@@ -133,7 +133,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     }
 
     @Test
-    public void insertSequenceEcriture() {
+    public void test_insertSequenceEcriture() {
         // arrange
         List<JournalComptable> journalComptableList = SpringRegistry.getDaoProxy().getComptabiliteDao().getListJournalComptable();
         String journalCode = journalComptableList.get(1).getCode();
