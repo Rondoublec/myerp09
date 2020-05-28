@@ -16,27 +16,27 @@ public interface ComptabiliteDao {
 
     /**
      * Renvoie la valeur de la sequence
-     * @param journalCode
-     * @param annee
-     * @return
+     * @param journalCode -
+     * @param annee -
+     * @return Valeur de la dernière séquence
      */
     public Integer getDerniereValeurSequenceEcriture(String journalCode, Integer annee);
 
     /**
      * Crée la sequence de reférencement d'ecritures comptables
-     * @param sequenceEcritureComptable
+     * @param sequenceEcritureComptable -
      */
     public void insertSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable);
 
     /**
      * Met à jour la sequence de reférencement d'ecritures comptables
-     * @param sequenceEcritureComptable
+     * @param sequenceEcritureComptable -
      */
     public void updateSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable);
 
     /**
      * Supprime la sequence de reférencement d'ecritures comptables
-     * @param sequenceEcritureComptable
+     * @param sequenceEcritureComptable -
      */
     public void deleteSequenceEcriture(SequenceEcritureComptable sequenceEcritureComptable);
 

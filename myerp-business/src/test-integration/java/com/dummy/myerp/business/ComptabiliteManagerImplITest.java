@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Classe de test de l'initialisation du contexte Spring
  */
-public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
+public class ComptabiliteManagerImplITest extends BusinessTestCase {
 
     @Rule
     public ExpectedException raisedException = ExpectedException.none();
@@ -31,7 +31,7 @@ public class ComptabiliteManagerImplIntTest extends BusinessTestCase {
     /**
      * Constructeur.
      */
-    public ComptabiliteManagerImplIntTest() {
+    public ComptabiliteManagerImplITest() {
         super();
     }
 

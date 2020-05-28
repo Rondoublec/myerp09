@@ -42,12 +42,18 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
 
     // ==================== Getters/Setters ====================
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CompteComptable> getListCompteComptable() {
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<JournalComptable> getListJournalComptable() {
         return getDaoProxy().getComptabiliteDao().getListJournalComptable();

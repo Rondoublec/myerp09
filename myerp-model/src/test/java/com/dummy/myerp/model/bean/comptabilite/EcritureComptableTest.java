@@ -1,6 +1,5 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,11 +16,10 @@ public class EcritureComptableTest {
         BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
         BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
         String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
-                                     .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
-        LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
-                                                                    vLibelle,
-                                                                    vDebit, vCredit);
-        return vRetour;
+                .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
+        return new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
+                vLibelle,
+                vDebit, vCredit);
     }
     @Test
     public void test_SettersAndGetters() {
@@ -31,7 +29,7 @@ public class EcritureComptableTest {
         Date DATE_DU_JOUR = new Date();
         String LIBELLE = "Libelle";
         String REFERENCE = "AC-2020/00000";
-        BigDecimal CENT = new BigDecimal(100.00);
+        BigDecimal CENT = new BigDecimal("100.00");
         // Act
         EcritureComptable vEcriture = new EcritureComptable();
         vEcriture.setId(VALEUR_ID);

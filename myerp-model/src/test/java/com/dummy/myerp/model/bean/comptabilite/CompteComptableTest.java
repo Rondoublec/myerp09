@@ -34,7 +34,7 @@ public class CompteComptableTest {
         // Act
         CompteComptable rCompteCompatble = CompteComptable.getByNumero(listCompteComptable, 111);
         // Assert
-        Assert.assertEquals(null, rCompteCompatble);
+        Assert.assertNull(rCompteCompatble);
     }
 
 }

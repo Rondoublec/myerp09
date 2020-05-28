@@ -1,7 +1,6 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class JournalComptableTest {
         // Act
         JournalComptable rJournalComptable = JournalComptable.getByCode(listJournalComptable,"DD");
         // Assert
-        Assert.assertEquals(null, rJournalComptable);
+        Assert.assertNull(rJournalComptable);
     }
 
 }

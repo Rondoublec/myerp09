@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class ComptabiliteDaoImplTest extends ConsumerTestCase{
+public class ComptabiliteDaoImplITest extends ConsumerTestCase{
 
     @Rule
     public ExpectedException raisedException = ExpectedException.none();
@@ -25,7 +25,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
     /**
      * Constructeur.
      */
-    public ComptabiliteDaoImplTest() {
+    public ComptabiliteDaoImplITest() {
         super();
     }
 
@@ -62,7 +62,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         // act
         EcritureComptable rEcritureComptable = SpringRegistry.getDaoProxy().getComptabiliteDao().getEcritureComptable(ecritureComptable.getId());
         // assert
-        Assert.assertTrue(ecritureComptable.getReference().equals(rEcritureComptable.getReference()));
+        Assert.assertEquals(ecritureComptable.getReference(), rEcritureComptable.getReference());
     }
     @Test
     public void test_GetEcritureComptableNotFound() throws NotFoundException {
@@ -81,7 +81,7 @@ public class ComptabiliteDaoImplTest extends ConsumerTestCase{
         // act
         EcritureComptable rEcritureComptable = SpringRegistry.getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(ecritureComptable.getReference());
         // assert
-        Assert.assertTrue(ecritureComptable.getId().equals(rEcritureComptable.getId()));
+        Assert.assertEquals(ecritureComptable.getId(), rEcritureComptable.getId());
     }
     @Test
     public void test_GetEcritureComptableByRefNotFound() throws NotFoundException {

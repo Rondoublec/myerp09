@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer;
+package com.dummy.myerp.business;
 
 import org.junit.Test;
 
@@ -8,14 +8,15 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Classe de test de l'initialisation du contexte Spring
  */
-public class TestInitSpring extends ConsumerTestCase {
+public class TestInitSpringIT extends BusinessTestCase {
 
     /**
      * Constructeur.
      */
-    public TestInitSpring() {
+    public TestInitSpringIT() {
         super();
     }
+
 
     /**
      * Teste l'initialisation du contexte Spring
@@ -23,6 +24,7 @@ public class TestInitSpring extends ConsumerTestCase {
     @Test
     public void testInit() {
         SpringRegistry.init();
-        assertNotNull(SpringRegistry.getDaoProxy());
+        assertNotNull(SpringRegistry.getBusinessProxy());
+        assertNotNull(SpringRegistry.getTransactionManager());
     }
 }

@@ -31,9 +31,9 @@ public class SequenceEcritureComptable {
     /**
      * Constructeur
      *
-     * @param pJournalCode
-     * @param pAnnee
-     * @param pDerniereValeur
+     * @param pJournalCode -
+     * @param pAnnee -
+     * @param pDerniereValeur -
      */
     public SequenceEcritureComptable(String pJournalCode, Integer pAnnee, Integer pDerniereValeur) {
         this.journalCode = pJournalCode;
