@@ -24,7 +24,7 @@ Base de données :
 PostgresSQL 11.2
 
 
-## Organisation du dossiers
+## Organisation des dossiers
 
 *   `bdd_myerp` : dump PostgreSQL de la base de données d'exemple (compatible avec les tests d'intégration)
 *   `doc` : documentation
