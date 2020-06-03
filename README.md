@@ -1,5 +1,7 @@
 # MyERP : Mon Application de comptabilité
 
+Test de build automatique.
+
 ## Context
 Application de comptabilité, projet 9 du cursus de formation développeur Java d'OpenClassrooms.
 
